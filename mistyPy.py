@@ -87,6 +87,15 @@ class Robot:
 			data={"FileName": file_name, "Data": encoded_string, "ImmediatelyApply" : apply, "OverwriteExisting": overwrite}			
 			requests.post(url, json=data)		
 
+    def enableAvStreamingService (self):
+        requests.post( "http://" + self.ip + "/api/services/avstreaming/enable" )
+ 
+    def stopAvStreaming(self,URL="rtspd:1936"):
+        requests.post( "http://"+ self.ip + "/api/avstreaming/stop",json={"URL": "rtspd:1936"} ) 
+
+    def startAvStreaming(self,URL="rtspd:1936",width=640,height=480):
+        requests.post( "http://" + self.ip + "/api/avstreaming/start", json= {"URL": "","Width": width, "Height": height})
+
     def battery(self):
         resp = requests.get('http://' + self.ip + '/api/battery')
         for reply in resp.json():
